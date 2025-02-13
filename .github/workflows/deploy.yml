@@ -36,7 +36,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key $SERVER_USER@$SERVER_IP << 'EOF'
             # Navigate to the project directory
-            cd /fastapi-book-project || exit 1
+            cd ~/fastapi-book-project || exit 1
 
             # Pull the latest changes from the main branch
             git pull origin main

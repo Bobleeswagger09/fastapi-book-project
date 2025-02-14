@@ -1,7 +1,14 @@
 from enum import Enum
 from typing import OrderedDict
+<<<<<<< HEAD
 from pydantic import BaseModel
 
+=======
+
+from pydantic import BaseModel
+
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
 class Genre(str, Enum):
     """Book genres."""
 
@@ -12,18 +19,30 @@ class Genre(str, Enum):
     ROMANCE = "Romance"
     THRILLER = "Thriller"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
 class Book(BaseModel):
     """Book schema
 
     Args:
         BaseModel (BaseModel): Pydantic base model.
     """
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
     id: int
     title: str
     author: str
     publication_year: int
     genre: Genre
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
 class InMemoryDB:
     def __init__(self):
         self.books: OrderedDict[int, Book] = {}
@@ -35,7 +54,11 @@ class InMemoryDB:
             OrderedDict[int, Book]: Ordered dictionary of books.
         """
         return self.books
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
     def add_book(self, book: Book) -> Book:
         """Adds book to database.
 
@@ -57,7 +80,11 @@ class InMemoryDB:
             Book: Book.
         """
         return self.books.get(book_id)
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
     def update_book(self, book_id: int, data: Book) -> Book:
         """Updates a specific book in database.
 
@@ -71,7 +98,11 @@ class InMemoryDB:
         self.books.update({book_id: data})
         return self.books.get(book_id)
 
+<<<<<<< HEAD
     def delete_book(self, book_id: int) -> None: 
+=======
+    def delete_book(self, book_id: int) -> None:
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
         """Deletes a specific book from database.
 
         Args:
@@ -79,4 +110,7 @@ class InMemoryDB:
         """
         if book_id in self.books:
             del self.books[book_id]
+<<<<<<< HEAD
             
+=======
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f

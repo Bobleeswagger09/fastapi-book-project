@@ -1,14 +1,25 @@
+<<<<<<< HEAD
 name: Deploy to production environment
 
 on:
   push:
     branches: [main]
+=======
+name: Deploy FastAPI to Azure VM
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual triggering from GitHub UI
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+<<<<<<< HEAD
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -24,3 +35,51 @@ jobs:
             pip install -r requirements.txt  
             sudo systemctl restart fastapi
             sudo systemctl restart nginx
+=======
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          # Create the .ssh directory if it doesn't exist
+          mkdir -p ~/.ssh
+
+          # Save the SSH private key
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+
+          # Add the Azure host to known_hosts to avoid authenticity prompts
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to Azure VM
+        env:
+          SERVER_USER: ${{ secrets.SSH_USERNAME }}
+          SERVER_IP: ${{ secrets.SSH_HOST }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key $SERVER_USER@$SERVER_IP << 'EOF'
+            # Navigate to the project directory
+            cd ~/fastapi-book-project || exit 1
+
+            # Pull the latest changes from the main branch
+            git pull origin main
+
+            # Ensure virtual environment is activated (or create one if needed)
+            source venv/bin/activate || (python3 -m venv venv && source venv/bin/activate)
+
+            # Install/Upgrade pip
+            pip install --upgrade pip
+
+            # Install project dependencies
+            pip install -r requirements.txt
+
+            # Restart FastAPI service (assuming systemd is used for the service)
+            sudo systemctl restart fastapi || true
+
+            # Optional: You can also check the status of the service after restart (uncomment if needed)
+            # sudo systemctl status fastapi
+          EOF
+
+>>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f

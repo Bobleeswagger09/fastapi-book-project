@@ -1,8 +1,4 @@
 import secrets
-<<<<<<< HEAD
-=======
-
->>>>>>> 1bad0e1c27fbb4bca60ceb33189d127d8eaabc4f
 from pydantic_settings import BaseSettings
 
 

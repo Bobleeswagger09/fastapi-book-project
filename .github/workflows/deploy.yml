@@ -1,0 +1,27 @@
+name: Deploy to production environment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/fastapi-book-project 
+            git pull origin main 
+
+
+            source venv/bin/activate
+            pip install -r requirements.txt  
+            sudo systemctl restart fastapi
+            sudo systemctl restart nginx
+
